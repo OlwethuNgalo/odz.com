@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chat</title>
+        <style>
+            .{
+                margin: 0;
+                padding: 0;
+            }
+            :root{
+                --main-color: #00ff51;
+
+            }
+            body{
+                background-image: url(file:///C:/Users/User/Desktop/tomcat/web/olwethu.jpg);
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                overflow-x: hidden;
+            }
+            .accordion{
+                margin: 60px;
+                width: 600px;
+                font-weight: bold;
+            }
+            .accordion li{
+                list-style: none;
+                width: 100%;
+                margin: 20px;
+                padding: 10px;
+                border-radius: 8px;
+                box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.015), -6px -6px 10px -1px rgba(0,0,0,0.015);
+                background-color: transparent;
+                background-size: cover;
+                background-position: center;
+            }
+            .accordion li label{
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                font-size: 18px;
+                font-weight: 500;
+                cursor: pointer;
+            }
+            .accordion .content{
+                background-color:linear-gradient(45deg, #8000ff, #bf00ff, #ff00ff);
+                box-shadow: black;
+                backdrop-filter: blur(6px);
+                background-position: center;
+                background-size: cover;
+                cursor: pointer;
+            }
+            label::before{
+                content: '+';
+                margin-right: 10px;
+                font-size: 24px;
+                font-weight: 600;
+            }
+            input[type="radio"]{
+                display: none;
+            }
+            .accordion .content{
+                color: whitesmoke;
+                padding: 0 10px;
+                line-height: 26px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s,padding 0.5s;
+            }
+            .accordion
+            input[type="radio"]:checked +label
+            +.content{
+                max-height: 400px;
+                padding: 10px 14px 20px;
+            }
+            .accordion
+            input[type="radio"]:checked +
+            label::before{
+                content: '-';
+            }
+            label{
+                color: white;
+                font-weight: bold;
+            }
+            .p{
+                font-weight: bold;
+                color: white;
+            }
+            .title{
+                font-size: 50px;
+                line-height: 100px;
+                font-weight: bold;
+                height: 100px;
+                text-align: left;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+                overflow: hidden;
+                color: white;
+                box-shadow: 6px 6px 10px -1px rgb(0,0,0,0.15),
+                -6px -6px 10px -1px rgb(0,0,0,0.15);
+                width: 100%;
+                height: 50px;
+                top: 10px;
+                bottom: auto;
+                left: 150px;
+                right: 0px;
+                position: absolute;
+                background-color: transparent;
+                background-size: cover;
+                background-position: center;
+                box-sizing: border-box;
+                box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
+                -6px -6px 10px -1px rgb(0,0,0,0.15);
+            }
+            .slider{
+                color: whitesmoke;
+                margin: 12px;
+                box-sizing: border-box;
+                animation:slider 10s linear infinite;
+            }
+            @keyframes slider{
+                0%{margin-top: -200px;}
+                30%{margin-top: -200px;}
+                35%{margin-top: 0px;}
+                65%{margin-top: 0px;}
+                70%{margin-top: 200px;}
+                100%{margin-top: 200px;}
+            }
+            .dropdown{
+                position: relative;
+                display: inline-block;
+                margin: 10px;
+            }
+            .dropbtn{
+                background-color: white;
+                box-shadow:#00ff51 ;
+                color: black;
+                padding: 10px;
+                font-size: 16px;
+                border:none;
+                cursor:pointer;
+            }
+            .dropdown-content{
+                display:none;
+                position:absolute;
+                background-color: white;
+                box-shadow: #00ff51;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,o.2);
+                z-index: 1;
+            }
+            .dropdown-content a{
+                color:black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+            .dropdown-content a:hover{
+                background-color:#f1f1f1;;
+            }
+            .dropdown:hover .dropdown-content{
+                display: block;
+            }
+            .sql{
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                max-width: 400px;
+                max-height: 400px;
+                padding: 10px;
+                background-color: rgba(46, 46, 46, 0.8);
+                border-radius: 5px;
+                overflow: auto;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                display: flex;
+
+            }
+            .typing{
+                white-space: pre;
+                overflow: hidden;
+                text-align: center;
+                justify-content: center;
+                font-size: 0.6rem;
+            }
+            .keyword { color: #569cd6;}
+            .datatype{color: #4ec9b0;}
+            .string{ color: #ce9178;}
+            .number {color: #b5cea8;}
+
+           .code-box{
+            position: fixed;
+            bottom: 20px;
+            left: 58%;
+            max-width: 400px;
+            max-height: 400px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size:0.6rem ;
+            overflow: auto;
+           } 
+           .Keyword{ color: #ff1493;}
+            .type{ color: #00bfff;}
+            .comment { color: #00ff00;}
+            .string{ color: #ff6347;}
+
+            ::-webkit-scrollbar-thumb{
+                background-color: #8000ff;
+            }
+            ::-webkit-scrollbar-track{
+                background-color: #8000ff;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div class="dropdown">
+            <button class="dropbtn">Contact</button>
+            <div class="dropdown-content">
+                <a href="mailto:olwethungalo@bardalesec.org.za">Mail</a>
+                <a href="https: //whatsapp.com/dl/0677571750">whatsapp</a>
+                <a href="https: //www.facebook.com/olwethu.gabavane">facebook</a>
+            </div>
+            </div>
+            <ul class="accordion">
+                <li>
+                    <input type="radio" name="accordion" id="first" checked="">
+                    <label for="first">Candidate discription</label>
+                    <div class="content">
+                        <p>I am candidate with entry level skills of  IT(user support services)
+                            willing to take part on tech support, helpdesk tier 1, information system,
+                            information technology.Certainley with the skills i attained i can be part
+                            of the team however i am none-experienced candidate.
+                            i dedicate my selft to follow organization procidures.
+                            I have excellent and verbal communication, make sure to research,
+                            diagnose, troubleshoot and identify solution to resolve client issues, provide 
+                            prompt and accurate feedback to clients, ensure proper recording clodure of
+                            issues. I believe i can make valueble team within organization.
+                            I eager to speak about this position in more detail should i be contacted
+                            for interview.</p>
+                    </div>
+                </li>
+                <li>
+                    <input type="radio" name="accordion" id="second">
+                    <label for="second">Competence</label>
+                    <div class="content">
+                        <p>
+                            Client focused<br>
+                            Collaborates<br>
+                            Cultivates results<br>
+                            Drives results<br>
+                            Being resilient
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <input type="radio" name="accordion" id="third">
+                    <label for="third">Personal attributes</label>
+                    <div class="content">
+                        <p>
+                            Communication<br>
+                            Analytical thinking<br>
+                            Decision making and problem solving<br>
+                            Work standards<br>
+                            Continuous learning
+                            </p>
+                    </div>
+                <div class="container">
+                    <div class="title">
+                        <a href=" ">Interest</a>
+                        <div class="slider">
+                            <div>Data center</div>
+                            <div>Technical support</div>
+                             <div>Help Desk</div>
+                        </div>
+                    </div>            
+                </div>
+                <div class="sql">
+                 <div class="typing" id="Itype">
+                    <span class="keyword">CREAT TABLE</span>employees (
+                        id <span class="datatype">INT</span><span class="keyword">AUTO_INCREMENT PRIMARY KEY</span>,
+                        name<span class="datatype">VARCHAR(100)</span>,
+                        position <span class="datatype">VARCHAR(100)</span>,
+                        salary<span class="datatype">DCEIMAL</span>
+                    );
+                    <span class="keyword">INSERT INTO</span>employees(name, position, salary)
+                    <span class="keyword">VALUES</span>
+                    (<span class="string">'Alice jhonson'</span>,<span class="string">'Manager'</span>,<span class="number">75000.00</span>),
+                    (<span class="string">'Bob smith'</span>,<span class="string">'Developer'</span>,<span class="number">60000.00</span>),
+                    (<span class="string">'Carol white'</span>,<span class="string">'Designer'</span>,<span class="number">55000.00</span>),
+                    <span class="keyword">SELECT * FROM</span> employees;
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="number">|id  |name           |position    |salary   |</span>
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="number">|1   |Alice jhonson  |Manager     |75000.00 |</span>
+                     <span class="number">|2   |Bob smith      |Developer   |60000.00 |</span>
+                     <span class="number">|3   |Carol white    |Designer    |55000.00 |</span>
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="keyword">UPDATE</span>employees
+                     <span class="keyword">SET</span>salary=<span class="number">650000.00</span>
+                     <span class="keyword">WHERE</span>name=<span class="string">'Bob smith'</span>;
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="number">|id  |name           |position    |salary   |</span>
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="number">|1   |Alice jhonson  |Manager     |75000.00 |</span>
+                     <span class="number">|2   |Bob smith      |Developer   |65000.00 |</span>
+                     <span class="number">|3   |Carol white    |Designer    |55000.00 |</span>
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="keyword">ALTER TABLE</span> employees
+                     <span class="keyword">ADD COLUMN</span>hire_date<span class="datatype">DATE</span>;
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="number">|id  |name           |position    |salary   |</span>
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="number">|1   |Alice jhonson  |Manager     |75000.00 |</span>
+                     <span class="number">|2   |Bob smith      |Developer   |65000.00 |</span>
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="keyword">ALTER TABLE</span> employees
+                     <span class="keyword">DROP COLUMN</span>hire_date;
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="number">|id  |name           |position    |salary   |</span>
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="number">|1   |Alice jhonson  |Manager     |75000.00 |</span>
+                     <span class="number">|2   |Bob smith      |Developer   |65000.00 |</span>
+                     <span class="number">+----+---------------+------------+---------+</span>
+                     <span class="keyword">DROP TABLE</span>employees;
+                 </div>
+                </div>
+            <div class="code-box">
+                <div class="code">
+                    <div class="code-content" id="codeContent">
+                        import<span class="type">java.util.Scanner</span>;<br><br>
+                        <span class="Keyword">public class</span><span class="type">ScannerExample</span> {<br>
+                         <span class="Keyword">public static void</span><span class="type">main</span>(<span class="'type">String</span>[] args) {<br>
+                            <span class="comment">//Creat a Scanner object</span><br>
+                            Scanner scanner = <span class="Keyword">new</span> Scanner (<span class="type">System.in</span>);<br><br>
+                            <span class="comment">//Read an integer</span><br>
+                            System.out.print(<span class="string">"Enter an integer: "</span>);<br>
+                            <span class="type">int</span>intValue = scanner.nextInt();<br><br>
+                            <span class="comment">//Read a double</span><br>
+                            System.out.print(<span class="string">"Enter a double: "</span>);<br>
+                            <span class="type">double</span> ddoubleValue = scanner.Double();<br><br>
+                            <span class="comment">//Consume the reamining newline character</span><br>
+                            scanner.nextLine();<br><br>
+                            <span class="comment">//Read a string</span><br>
+                            System.out.print(<span class="string">"Enter astring: "</span>);<br>
+                             <span class="type">String</span> stringValue = scanner.nextLine();<br><br>
+                             <span class="comment">//Desplay the inputs</span><br>
+                             System.out.println(<span class="string">"You entered the integer: "</span> +intValue);<br>
+                             System.out.println(<span class="string">"You entered the double: "</span> + doubleValue);<br>
+                             System.out.println(<span class="string">"You entered the string: "</span> + stringValue);<br><br>
+                             <span class="comment">//close the scanner</span><br>
+                             scanner.close();<br>
+                                                          }<br>
+                                               }
+                    </div>
+                </div>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const content = document.getElementById('codeContent').innerHTML;
+                    let index = 0;
+                    let direction = 1;
+                    const speed = 20;
+
+                    function typeEffect(){
+                        if(direction === 1 && index < content.length){
+                            document.getElementById('codeContent').innerHTML = content.slice(0,++index);
+                        }else if (direction === -1 && index < content.length){
+                            document.getElementById('codeContent').innerHTML = content.slice(0,--index);
+                        }else{
+                            direction *= -1;
+                        }
+                        setTimeout(typeEffect,speed);
+                    }
+                    typeEffect();
+                });
+                document.addEventListener('DOMContentLoaded', function() {
+                    const content = document.getElementById('Itype').innerHTML;
+                    let index = 0;
+                    let direction = 1;
+                    const speed = 10;
+                    function typeEffect(){
+                        if(direction === 1 && index < content.length){
+                            document.getElementById('Itype').innerHTML = content.slice(0,++index);
+                        }else if (direction === -1 && index < content.length){
+                            document.getElementById('Itype').innerHTML = content.slice(0,--index);
+                        }else{
+                            direction *= -1;
+                        }
+                        setTimeout(typeEffect,speed);
+                    }
+                    typeEffect();
+                });
+            </script>
+        </div>
+    </body>
+</html>
